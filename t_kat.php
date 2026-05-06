@@ -1,3 +1,32 @@
+<?php
+include "koneksi.php";
+
+$auto = mysqli_query($conn, "select max(kd_kat) as max_code from categories");
+$hasil = mysqli_fetch_array($auto);
+$code = $hasil['max_code'];
+if ($code == NULL) {
+    $urutan = 0;
+} else {
+    $urutan = (int) substr($code, 1, 3);
+}
+$urutan++;
+$huruf = "K";
+$kd_kat = $huruf . sprintf("%03s", $urutan);
+
+if (isset($_POST['simpan'])) {
+    $nm_kat = $_POST['nm_kat'];
+
+    $query = mysqli_query($conn, "INSERT INTO categories(kd_kat, category_name) VALUES ('$kd_kat', '$nm_kat')");
+    if ($query) {
+        echo "<script>alert('Data berhasil ditambahkan!')</script>";
+        header("refresh:0, kategori_produk.php");
+    } else {
+        echo "<script>alert('Data gagal ditambahkan!')</script>";
+        header("refresh:0, kategori_produk.php");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +34,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>Kategori Produk - Inventory Product</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,7 +67,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Inventory Product</span>
       </a>
@@ -122,7 +151,68 @@
 
         </li><!-- End Notification Nav -->
 
-        
+        <li class="nav-item dropdown">
+
+          
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -183,129 +273,181 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+   <!-- ======= Sidebar ======= -->
+   <aside id="sidebar" class="sidebar">
 
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+<ul class="sidebar-nav" id="sidebar-nav">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+  <li class="nav-item">
+    <a class="nav-link " href="index.html">
+      <i class="bi bi-speedometer2a"></i>
+      <span>Dashboard</span>
+    </a>
+  </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link " href="index.php">
-          <i class="bi bi-speedometer2a"></i>
-          <span>Dashboard</span>
+  <li class="nav-item">
+    
+    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="components-alerts.html">
+          <i class="bi bi-circle"></i><span>Alerts</span>
         </a>
-      </li><!-- End Dashboard Nav -->
-
-      
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="kategori_produk.php">
-          <i class="bi bi-tags"></i>
-          <span>Kategori Produk</span>
+      </li>
+      <li>
+        <a href="components-accordion.html">
+          <i class="bi bi-circle"></i><span>Accordion</span>
         </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="produk.php">
-          <i class="bi bi-box-seam"></i>
-          <span>Data Produk</span>
+      </li>
+      <li>
+        <a href="components-badges.html">
+          <i class="bi bi-circle"></i><span>Badges</span>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="laporan.php">
-          <i class="bi bi-bar-chart-line"></i>
-          <span>Laporan</span>
+      </li>
+      <li>
+        <a href="components-breadcrumbs.html">
+          <i class="bi bi-circle"></i><span>Breadcrumbs</span>
         </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users.php">
-          <i class="bi bi-people"></i>
-          <span>Manajemen User</span>
+      </li>
+      <li>
+        <a href="components-buttons.html">
+          <i class="bi bi-circle"></i><span>Buttons</span>
         </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-       
-      
+      </li>
+      <li>
+        <a href="components-cards.html">
+          <i class="bi bi-circle"></i><span>Cards</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-carousel.html">
+          <i class="bi bi-circle"></i><span>Carousel</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-list-group.html">
+          <i class="bi bi-circle"></i><span>List group</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-modal.html">
+          <i class="bi bi-circle"></i><span>Modal</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-tabs.html">
+          <i class="bi bi-circle"></i><span>Tabs</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-pagination.html">
+          <i class="bi bi-circle"></i><span>Pagination</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-progress.html">
+          <i class="bi bi-circle"></i><span>Progress</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-spinners.html">
+          <i class="bi bi-circle"></i><span>Spinners</span>
+        </a>
+      </li>
+      <li>
+        <a href="components-tooltips.html">
+          <i class="bi bi-circle"></i><span>Tooltips</span>
+        </a>
+      </li>
     </ul>
+  </li><!-- End Components Nav -->
 
-  </aside><!-- End Sidebar-->
+
+  
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="users-profile.html">
+      <i class="bi bi-tags"></i>
+      <span>Kategori Produk</span>
+    </a>
+  </li><!-- End Profile Page Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="pages-faq.html">
+      <i class="bi bi-box-seam"></i>
+      <span>Data Produk</span>
+    </a>
+  </li><!-- End F.A.Q Page Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="pages-contact.html">
+      <i class="bi bi-bar-chart-line"></i>
+      <span>Laporan</span>
+    </a>
+  </li><!-- End Contact Page Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="pages-register.html">
+      <i class="bi bi-people"></i>
+      <span>Manajemen User</span>
+    </a>
+  </li><!-- End Register Page Nav -->
+
+  <li class="nav-item">
+   
+  
+</ul>
+
+</aside><!-- End Sidebar-->
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Kategori Produk</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
+          <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+          <li class="breadcrumb-item">Kategori Produk</li>
+          <li class="breadcrumb-item active">Tambah</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
     <section class="section">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
+
+         
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Datatables</h5>
-              <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable</p>
+              <h5 class="card-title">Tambah Kategori Produk</h5>
 
-              <!-- Table with stripped rows -->
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
+              <!-- Vertical Form -->
+              <form class="row g-3" method="post">
+                <div class="col-12">
+                  <label for="kd_kat" class="form-label">Kode Kategori</label>
+                  <input type="text" class="form-control" id="kd_kat" name="kd_kat" value="<?php echo $kd_kat; ?>" readonly>
+                </div>
+                <div class="col-12">
+                  <label for="nm_kat" class="form-label">Nama Kategori</label>
+                  <input type="text" class="form-control" id="nm_kat" name="nm_kat" required>
+</div>
 
+                
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning"><a href="kategori_produk.php" style="color: black; text-decoration:none;">Kembali</a></button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" class="btn btn-success" name="simpan">Simpan</button>
+
+                </div>
+              </form><!-- Vertical Form -->
+
+        
             </div>
           </div>
 
