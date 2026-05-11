@@ -1,3 +1,64 @@
+<?php
+include "koneksi.php";
+$id = $_GET['id'];
+$query = mysqli_query($conn, "SELECT * FROM products WHERE id= '$id'");
+$hasil = mysqli_fetch_array($query);
+if (isset($_POST['update'])) {
+
+    $nm_produk   = $_POST['nm_produk'];
+    $stok        = $_POST['stok'];
+    $min_stok    = $_POST['min_stok'];
+    $harga       = $_POST['harga'];
+    $id_kategori = $_POST['id_kategori'];
+
+    $img_file = $_FILES['gambar']['name'];
+
+    // kalau upload gambar baru
+    if ($imgfile != "") {
+
+        $tmp     = $_FILES['gambar']['tmp_name'];
+        $ext     = strtolower(pathinfo($imgfile, PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (in_array($ext, $allowed)) {
+
+            $imgnew = md5(time() . $imgfile) . "." . $ext;
+            move_uploaded_file($tmp, "produk_img/" . $imgnew);
+
+            $update = mysqli_query($conn, "UPDATE products SET
+                category_id = '$id_kategori',
+                product_name = '$nm_produk',
+                stock = '$stok',
+                min_stock = '$min_stok',
+                price = '$harga',
+                gambar = '$imgnew'
+                WHERE id = '$id'
+            ");
+        } else {
+            echo "<script>alert('Format gambar tidak valid');</script>";
+            return;
+        }
+    } else {
+        // tanpa ganti gambar
+        $update = mysqli_query($conn, "UPDATE products SET
+            category_id = '$id_kategori',
+            product_name = '$nm_produk',
+            stock = '$stok',
+            min_stock = '$min_stok',
+            price = '$harga',
+            WHERE id = '$id' 
+        ");
+    }
+    if ($update) {
+        echo "<script>alert('Data berhasil diubah!')</script>";
+        header("refresh;0, produk.php");
+    } else {
+        echo "<script>alert('Data gagal diubah!')</script>";
+        header("refresh;0, produk.php");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -214,8 +275,11 @@
 
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-warning">
+                                        <a href="produk.php" style="color: black; text-decoration:none;">Kembali</a>
+                                    </button>
                                     <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="submit" class="btn btn-success" name="update">Update</button>
                                 </div>
                             </form><!-- Vertical Form -->
 
@@ -233,7 +297,7 @@
             &copy; Copyright <strong><span>Nama Sistem</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="">Nama Kalian</a>
+            Designed by <a href="">Kirani Cinta Mentari</a>
         </div>
     </footer><!-- End Footer -->
 
