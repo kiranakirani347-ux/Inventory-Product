@@ -1,5 +1,5 @@
 <?php
-include "koneksi.php"
+include "koneksi.php";
 
 $id = $_GET['id'];
 
@@ -9,7 +9,7 @@ $data = mysqli_fetch_array($get);
 $gambar = $data['gambar'];
 
 // hapus file gambar jika ada
-if ($gambar != "" && file_exist("produk_img/" . $gambar)) {
+if ($gambar != "" && file_exists("produk_img/" . $gambar)) {
     unlink("produk_img/" . $gambar);
 }
 

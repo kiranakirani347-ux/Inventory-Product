@@ -31,7 +31,7 @@ if (isset($_POST['simpan'])) {
     $allowed_extensions = array("jpg", "jpeg", "png", "webp");
 
     if (!in_array($extension, $allowed_extensions)) {
-        echo "<script>alert('Format tidak valid. Hanya jpg, jpeg, png, dan webp yang diperbolehkan.";</script>";
+        echo "<script>alert('Format tidak valid. Hanya jpg, jpeg, png, dan webp yang diperbolehkan.');</script>";
     } else {
         
         $imgnewfile = md5(time() . $imgfile) . "." . $extension;
@@ -183,7 +183,7 @@ if (isset($_POST['simpan'])) {
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
                     <i class="bi bi-question-circle"></i>
-                    <span>Data_Produk</span>
+                    <span>Data Produk</span>
                 </a>
             </li><!-- End F.A.Q Page Nav -->
 
@@ -225,7 +225,7 @@ if (isset($_POST['simpan'])) {
                             <h5 class="card-title">Tambah Produk</h5>
 
                             <!-- Vertical Form -->
-                            <form class="row g-3"> method="post" enctype="multipart/form-data">
+                            <form class="row g-3" method="post" enctype="multipart/form-data">
                                 <div class="col-12">
                                     <label for="kd_produk" class="form-label">Kode Produk</label>
                                     <input type="text" class="form-control" id="kd_produk" name="kd_produk" value="<?php echo $kd_produk; ?>" readonly>
@@ -261,7 +261,7 @@ if (isset($_POST['simpan'])) {
                                 </div>
                                 <div class="col-12">
                                     <label for="gambar" class="form-label">Gambar Produk</label>
-                                    <input type="title" class="form-control" id="gambar" name="gambar" accept="image/*">
+                                    <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
                                 </div>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-warning"><a href="produk.php" style="color: black; text-decoration:none;">kembali</a></button>

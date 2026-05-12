@@ -11,7 +11,7 @@ if (isset($_POST['update'])) {
     $harga       = $_POST['harga'];
     $id_kategori = $_POST['id_kategori'];
 
-    $img_file = $_FILES['gambar']['name'];
+    $imgfile = $_FILES['gambar']['name'];
 
     // kalau upload gambar baru
     if ($imgfile != "") {
@@ -188,7 +188,7 @@ if (isset($_POST['update'])) {
             <li class="nav-item">
                 <a class="nav-link collapsed" href="produk.php">
                     <i class="bi bi-question-circle"></i>
-                    <span>Data_Produk</span>
+                    <span>Data Produk</span>
                 </a>
             </li><!-- End F.A.Q Page Nav -->
 
@@ -226,7 +226,7 @@ if (isset($_POST['update'])) {
                 <div class="col-lg-6">
 
                     <div class="card">
-                        < class="card-body">
+                        <class="card-body">
                             <h5 class="card-title">Edit Produk</h5>
 
                             <!-- Vertical Form -->
