@@ -1,3 +1,39 @@
+<?php
+include "koneksi.php";
+
+if (isset($_POST['simpan'])) {
+
+    $name      = mysqli_real_escape_string($conn, $_POST['name']);
+    $email     = mysqli_real_escape_string($conn, $_POST['email']);
+    $password  = $_POST['password'];
+    $role      = $_POST['role'];
+    $is_active = $_POST['is_active'];
+
+    // validasi email tidak boleh sama
+    $cek = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    if (mysqli_num_rows($cek) > 0) {
+        echo "<script>alert('Email sudah terdaftar!'); window.location='users.php';</script>";
+        exit;
+    }
+    // hash passowrd
+    if (!empty($password)) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+        echo "<script>alert('Password wajib diisi!'); window.location='users.php';</script>";
+        exit;
+    }
+
+    // insert data
+    $query = mysqli_query($conn, "INSERT INTO users (name, email, password, role, is_active)
+                                VALUES ('$name', '$email', '$password_hash', '$role', '$is_active')");
+    if ($query) {
+        echo "<script>alert('User berhasil ditambahkan!'); window.location='users.php';</script>";
+    } else {
+        echo "<script>alert('User gagal ditambahkan!'); window.location='users.php';</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +41,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Nama Sistem</title>
+    <title>Manajemen User - Inventory Product</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -155,8 +191,8 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                    <li class="breadcrumb-item">Kategori Produk</li>
-                    <li class="breadcrumb-item active">Edit</li>
+                    <li class="breadcrumb-item">Manajemen User</li>
+                    <li class="breadcrumb-item active">Tambah</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -166,31 +202,51 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Vertical Form</h5>
+                            <h5 class="card-title">Tambah User</h5>
 
-                            <!-- Vertical Form -->
-                            <form class="row g-3">
+                            <form class="row g-3" method="post">
+
                                 <div class="col-12">
-                                    <label for="inputNanme4" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="inputNanme4">
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control" name="role" required>
+                                        <option value="">-- Pilih Role --</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="staff">Staff</option>
+                                </select>
                                 </div>
                                 <div class="col-12">
-                                    <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4">
+                                    <label for="is_active" class="form-label">Status</label>
+                                    <select class="form-control" name="is_active">
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Nonaktif</option>
+                                    </select>
                                 </div>
-                                <div class="col-12">
-                                    <label for="inputPassword4" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4">
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                </div>
+
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-warning">
+                                        <a href="users.php" style="color: black; text-decoration:none;">Kembali</a>
+                                    </button>
                                     <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="submit" class="btn btn-success" name="simpan">Simpan</button>
                                 </div>
-                            </form><!-- Vertical Form -->
+                                    
+                            </form>
+                            
 
                         </div>
                     </div>

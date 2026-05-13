@@ -1,3 +1,52 @@
+<?php
+include "koneksi.php";
+
+$id = $_GET['id'];
+$data = mysqli_query($conn, "SELECT * FROM users WHERE id='$id'");
+$user = mysqli_fetch_array($data);
+
+if (isset($_POST['update'])) {
+
+    $name       = mysqli_real_escape_string($conn, $_POST['name']);
+    $email      = mysqli_real_escape_string($conn, $_POST['email']);
+    $password   = $_POST['password'];
+    $role       = $_POST['role'];
+    $is_active  = $_POST['is_active'];
+
+    // cek email (kecuali email milik user ini sendiri)
+    $cek = mysqli_query($conn, "SELECT * FROM users WHERE email='$email' AND id!='$id'");
+    if (mysqli_num_rows($cek) > 0) {
+        echo "<script>alert('Email sudah digunakan user lain!'); window.location='users.php';</script>";
+        exit;
+    }
+    // jika password diisi -> update password
+    if (!empty($password)) {
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = mysqli_query($conn, "UPDATE users SET
+        name='$name',
+        email='$email',
+        password='$password_hash',
+        role='$role',
+        is_active='$is_active'
+        WHERE id='$id'");
+    } else {
+    // jika password kosong -> jangan update password
+    $query = mysqli_query($conn, "UPDATE users SET
+        name='$name',
+        email='$email',
+        role='$role',
+        is_active='$is_active'
+        WHERE id='$id'");
+    }
+    if ($query) {
+        echo "<script>alert('User berhasil diupdate!'); window.location='users.php';</script>";
+    } else {
+        echo "<script>alert('User gagal diupdate!'); window.location='users.php';</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +54,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Kategori Produk - Nama Sistem</title>
+    <title>Manajemen User - Inventory Product</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -151,11 +200,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Kategori Produk</h1>
+            <h1>Manajemen User</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                    <li class="breadcrumb-item">Kategori Produk</li>
+                    <li class="breadcrumb-item">Manajemen User</li>
                     <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </nav>
@@ -169,28 +218,48 @@
                             <h5 class="card-title">Vertical Form</h5>
 
                             <!-- Vertical Form -->
-                            <form class="row g-3">
+                            <form class="row g-3" method="post">
+
                                 <div class="col-12">
-                                    <label for="inputNanme4" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="inputNanme4">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" class="form-control" name="name"
+                                        value="<?php echo $user['name']; ?>" required>
                                 </div>
+
                                 <div class="col-12">
-                                    <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email"
+                                        value="<?php echo $user['email']; ?>" required>
                                 </div>
+
                                 <div class="col-12">
-                                    <label for="inputPassword4" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="email"
+                                    <small class="text-muted">Kosongkan jika tidak ingin mengubah password</small>
                                 </div>
+
                                 <div class="col-12">
-                                    <label for="inputAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-control" name="role" required>
+                                        <option value="admin" <?php if ($user['role'] == 'admin') echo 'selected'; ?>>Admin</option>
+                                        <option value="staff" <?php if ($user['role'] == 'staff') echo 'selected'; ?>>Admin</option>
+                                    </select>
                                 </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-control" name="is_active" required>
+                                        <option value="1" <?php if ($user['is_active'] == 1) echo 'selected'; ?>>Aktif</option>
+                                        <option value="0" <?php if ($user['is_active'] == 0) echo 'selected'; ?>>Nonaktif</option>
+                                    </select>
+                                </div>
+
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="users.php" class="btn btn-warning">Kembali</button>
+                                    <button type="submt" class="btn btn-success" name="update">Update</button>
                                 </div>
-                            </form><!-- Vertical Form -->
+                            </form>
+                            <!-- Vertical Form -->
 
                         </div>
                     </div>
