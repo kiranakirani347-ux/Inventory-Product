@@ -1,7 +1,7 @@
 <?php
 // Require composer autoload
 require_once __DIR__ . '/vendor/autoload.php';
-        You, 6 days ago   menambahkan fitur cetak laporan ...
+
 // Koneksi database
 require_once('koneksi.php');
 
@@ -18,7 +18,7 @@ function query($query)
     return $rows;
 }
 
-// Ambil data barang masuk
+// Ambil data barang keluar
 $data = query("
     SELECT
         sl.id,
@@ -47,7 +47,7 @@ $mpdf = new \Mpdf\Mpdf([
 $html = '
 <html>
 <head>
-    <title>Laporan Barang Masuk</title>
+    <title>Laporan Barang Keluar</title>
 
     <style>
         body {
@@ -73,7 +73,7 @@ $html = '
         }
 
         thead th {
-            background-color: #198754;
+            background-color: #dc3545;
             color: white;
             padding: 10px;
             font-size: 12px;
@@ -98,7 +98,7 @@ $html = '
         }
 
         .qty-masuk {
-            color: green;
+            color: red;
             font-weight: bold;
         }
     </style>
@@ -108,7 +108,7 @@ $html = '
 
 <h1>Inventory Product</h1>
 <hr>
-<h3>LAPORAN BARANG MASUK</h3>
+<h3>LAPORAN BARANG KELUAR</h3>
 
 <table>
     <thead>
@@ -118,7 +118,7 @@ $html = '
             <th>Kode Produk</th>
             <th>Nama Produk</th>
             <th>Kategori</th>
-            <th>Qty Masuk</th>
+            <th>Qty Keluar</th>
             <th>Stok Sebelum</th>
             <th>Stok Sesudah</th>
             <th>Keterangan</th>
@@ -140,7 +140,7 @@ foreach ($data as $row) {
             <td>' . $row['product_code'] . '</td>
             <td>' . $row['product_name'] . '</td>
             <td>' . $row['category_name'] . '</td>
-            <td class="text-center qty-masuk">+' . $row['qty'] . '</td>
+            <td class="text-center qty-keluar">-' . $row['qty'] . '</td>
             <td class="text-center">' . $row['stock_before'] . '</td>
             <td class="text-center">' . $row['stock_after'] . '</td>
             <td>' . $row['note'] . '</td>
@@ -159,5 +159,5 @@ $html .= '
 
 // Generate PDF
 $mpdf->WritenHTML($html);
-$mpdf->Output('laporan_barang_masuk.pdf', 'I');
+$mpdf->Output('laporan_barang_keluar.pdf', 'I');
 ?>
