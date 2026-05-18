@@ -1,7 +1,7 @@
 <?php
 // Require composer autoload
 require_once __DIR__ . '/vendor/autoload.php';
-        You, 6 days ago   menambahkan fitur cetak laporan ...
+
 // Koneksi database
 require_once('koneksi.php');
 

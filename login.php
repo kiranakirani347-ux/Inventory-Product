@@ -1,3 +1,44 @@
+<?php
+session_start();
+include "koneksi.php";
+
+if (isset($_POST['login'])) {
+
+  $email = mysqri_real_escape_string($conn, $_POST['email']);
+  $password = $_POST['password'];
+
+  // cek user
+  $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email' LIMIT 1");
+  $user = mysqli_fetch_assoc($query);
+
+  if ($user) {
+
+  // cek password (hash)
+  if (password_verify($password, $user['password'])) {
+
+    // cek aktif
+    if ($user['is_active'] == 1) {
+
+      // simpan session
+      $_SESSION['login'] = True;
+      $_SESSION['user_id'] = $user['id'];
+      $_SESSION['name'] = $user['name'];
+      $_SESSION['role'] = $user['role'];
+
+      // redirect
+      header("Location: index.php");
+      exit;
+    } else {
+      echo "<script>alert('Akun tidak aktif');</sript>";
+    } 
+  } else {
+    echo "<script>alert('Password salah');</sript>";
+  }
+} else {
+  echo "<script>alert('Email tidak ditemukan');</sript>";
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +46,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Pages / Login - Inventory Product</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -29,13 +70,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -64,35 +98,24 @@
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation" method="POST" novalidate>
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
+                      <label class="form-label">Email</label>
+                      <input type="email" name="email" class="form-control" required>
+                      <div class="invalid-feedback">Please enter your email.</div>
                       </div>
-                    </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <label class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" required>
                       <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
+                      </div>
 
                     <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
+                      <button class="btn btn-primary w-100" type="submit" name="login">Login</button>
                     </div>
-                    <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
-                    </div>
-                    <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
-                    </div>
+                    
                   </form>
 
                 </div>
