@@ -118,8 +118,8 @@
 <ul class="sidebar-nav" id="sidebar-nav">
 
   <li class="nav-item">
-    <a class="nav-link " href="index.php">
-      <i class="bi bi-speedometer2a"></i>
+    <a class="nav-link collapsed" href="index.php">
+      <i class="bi bi-speedometer2"></i>
       <span>Dashboard</span>
     </a>
   </li><!-- End Dashboard Nav -->
@@ -134,7 +134,7 @@
   </li><!-- End Profile Page Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="produk.php">
+    <a class="nav-link " href="produk.php">
       <i class="bi bi-box-seam"></i>
       <span>Data Produk</span>
     </a>
@@ -165,12 +165,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Data Produk</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
+          <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+          <li class="breadcrumb-item">Data Produk</li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->

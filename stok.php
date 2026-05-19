@@ -241,8 +241,8 @@ if (isset($_POST['submit'])) {
 <ul class="sidebar-nav" id="sidebar-nav">
 
   <li class="nav-item">
-    <a class="nav-link " href="index.php">
-      <i class="bi bi-speedometer2a"></i>
+    <a class="nav-link collapsed" href="index.php">
+      <i class="bi bi-speedometer2"></i>
       <span>Dashboard</span>
     </a>
   </li><!-- End Dashboard Nav -->
@@ -257,7 +257,7 @@ if (isset($_POST['submit'])) {
   </li><!-- End Profile Page Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="produk.php">
+    <a class="nav-link " href="produk.php">
       <i class="bi bi-box-seam"></i>
       <span>Data Produk</span>
     </a>
@@ -291,7 +291,7 @@ if (isset($_POST['submit'])) {
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-          <li class="breadcrumb-item">Data Produk</li>
+          <li class="breadcrumb-item"><a href="produk.php">Data Produk</a></li>
           <li class="breadcrumb-item active">Manajemen Stok</li>
         </ol>
       </nav>
