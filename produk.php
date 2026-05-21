@@ -16,7 +16,7 @@ if (!isset($_SESSION["login"])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>Data Produk - Inventory Produk</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -210,7 +210,7 @@ if (!isset($_SESSION["login"])) {
                         <td><?php echo $data['stock']; ?></td>
                         <td>Rp <?php echo number_format($data['price'], 0, ',', '.'); ?></td>
                         <td>
-                            <img src="produk_img/<?php echo $data['gambar']; ?> width="60">
+                            <img src="produk_img/<?php echo $data['gambar']; ?>" width="60">
                         </td>
                         <td>
                             <a href="e_produk.php?id=<?php echo $data['id']; ?>" class="btn btn-warning">Edit</a>

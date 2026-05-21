@@ -16,7 +16,7 @@ if (!isset($_SESSION["login"])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / Data - Inventory Produk</title>
+  <title>Kategori Produk - Inventory Produk</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
