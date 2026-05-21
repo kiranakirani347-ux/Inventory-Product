@@ -10,22 +10,24 @@ if (!isset($_SESSION["login"])) {
 ?>
 
 <?php
-include "koneksi.php";
 // total stok
 $total_item = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM products"));
 // Total transaksi barang masuk
 $total_barang_masuk = mysqli_num_rows(mysqli_query(
-  $conn, "SELECT id FROM stock_logs WHERE change_type = 'ADD'"
+  $conn,
+  "SELECT id FROM stock_logs WHERE change_type = 'ADD'"
 ));
 
 // Total transaksi barang keluar
 $total_barang_keluar = mysqli_num_rows(mysqli_query(
-  $conn, "SELECT id FROM stock_logs WHERE change_type = 'REDUCE'"
+  $conn,
+  "SELECT id FROM stock_logs WHERE change_type = 'REDUCE'"
 ));
 
 // Total item dengan stok kritis / minimum
 $total_stok_kritis = mysqli_num_rows(mysqli_query(
-  $conn, "SELECT id FROM stock_logs WHERE stock <= min_stock"
+  $conn,
+  "SELECT id FROM products WHERE stock <= min_stock"
 ));
 ?>
 

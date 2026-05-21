@@ -44,23 +44,22 @@ if (isset($_POST['simpan'])) {
     if (!in_array($extension, $allowed_extensions)) {
         echo "<script>alert('Format tidak valid. Hanya jpg, jpeg, png, dan webp yang diperbolehkan.');</script>";
     } else {
-        
+
         $imgnewfile = md5(time() . $imgfile) . "." . $extension;
         move_uploaded_file($tmp_file, $dir . $imgnewfile);
 
-        $query = mysqli_query($conn, "INSERT INTO products
-        (category_id, product_code, product_name, stock, min_stock, price, gambar)
-        VALUES
-        ('$id_kategori', '$kd_produk', '$nm_produk', '$stok', '$min_stok', '$harga', 
-        '$imgfile')");
+        $query = mysqli_query($conn, "INSERT INTO products 
+        (category_id, product_code, product_name, stock, min_stock, price, gambar) 
+        VALUES 
+        ('$id_kategori', '$kd_produk', '$nm_produk', '$stok', '$min_stok', '$harga', '$imgnewfile')");
 
         if ($query) {
             echo "<script>alert('Produk berhasil ditambahkan!');</script>";
             header("refresh:0, produk.php");
-         } else {
+        } else {
             echo "<script>alert('Gagal menambahkan produk!');</script>";
             header("refresh:0, produk.php");
-         }
+        }
     }
 }
 ?>
@@ -237,7 +236,7 @@ if (isset($_POST['simpan'])) {
                                     <label for="harga" class="form-label">Harga</label>
                                     <input type="number" class="form-control" id="harga" name="harga" required>
                                 </div>
-                                <di class="col-12">
+                                <div class="col-12">
                                     <label for="id_kategori" class="form-label">Kategori</label>
                                     <select class="form-control" id="id_kategori" name="id_kategori" required>
                                         <option value="">-- Pilih Kategori --</option>
