@@ -375,27 +375,174 @@ function waktu_lalu($datetime)
                 markers: {
                   size: 4
                  },
-                colors: ['#4154f1', '#ff771d'],
+                colors: [' #4154f1', ' #ff771d'],
                 fill: {
                   type: "gradient",
                   gradient: {
-        
+                  shadeIntensity: 1,
+                  opacityFrom: 0.3,
+                  opacityTo: 0.4,
+                  stops: [0, 90, 100]
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'smooth',
+                width: 2
+              },
+              xaxis: {
+                categories: [...Array(31).keys()].map(i => i + 1) // tanggal 1-31
+              },
+              tooltip: {
+                x: {
+                format: 'dd/MM/yy'
+                },
+              }
+            }).render();
+          });
+        </script>
+
       </div>
-    </section>
+    </div>
+  </div>
+
+  <!-- PRODUK TERBARU -->
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+
+      <div class="card-body">
+        <h5 class="card-title">Produk Terbaru<span> Latest</span></h5>
+
+        <table class="table table-borderless datatable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Produk</th>
+              <th>Kategori</th>
+              <th>Stok</th>
+            </tr>
+          <thead>
+          <tbody>
+            <?php
+            $no = 1;
+            while ($row = mysqli_fetch_assoc($query)) :
+            ?>
+              <tr>
+                <th><?= $no++; ?></th>
+                <td><?= $row['product_name']; ?></td>
+                <td><?= $row['category_name']; ?></td>
+                <td><?= $row['stock']; ?></td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- RIGHT SIDE -->
+  <div class="col-lg-4">
+
+    <!-- STOK MENIPIS -->
+    <div class="card top-selling overflow-auto">
+
+      <div class="card-body pb-0">
+        <h5 class="card-title">Stok Menipis <span>| Warning</span></h5>
+
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th>Produk</th>
+              <th>Stok</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php while ($row = mysqli_fetch_assoc($q_menipis)) : ?>
+              <tr>
+                <td><?= $row['product_name']; ?></td>
+                <td><?= $row['stock']; ?></td>
+                <td>
+                  <?php if ($row['stock'] == 0): ?>
+                    <span class="badge bg-danger">Habis</span>
+                  <?php elseif ($row['stock'] <= ($row['min_stock'] / 2)): ?>
+                    <span class="badge bg-danger">Hampir Habis</span>
+                  <?php else: ?>
+                    <span class="badge bg-warning">Menipis</span>
+                  <?php endif; ?>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+    <!-- AKTIVITAS -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Aktivitas Barang</h5>
+        
+        <div class>="activity">
+
+        <?php while ($row - mysqli_fetch_assoc($q_aktivitas)) :
+
+          if ($row['change_type'] == 'ADD') {
+            $text = "Penambahan stok";
+            $color = "text-success";
+          } elseif ($row['change_type'] == 'REDUCE') {
+            $text = "Pengeluaran barang";
+            $color = "text-danger";
+          } else {
+            $text = "Perubahan stok";
+            $color = "text-primary";
+          }
+
+        ?>
+
+          <div class="activity-item d-flex">
+
+            <div class="activite-label">
+              <?=  waktu_lalu($row['created_at']); ?>
+            </div>
+
+            <i class="bi bi-circle-fill activity-badge <?=  $color ?> align-self-start"></i>
+
+            <div class="activity-content">
+              <?=  $text; ?>
+              <span class="fw-bold text-dark">
+                "<?=  $row['product_name']; ?>"
+              </span>
+            </div>
+
+          </div>
+
+        <?php endwhile; ?>
+      
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+</section>
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Inventory Product</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="https://instagram.com/_kiranicintaa/" target="blank">Kirani Cinta Mentari</a>
     </div>
   </footer><!-- End Footer -->
 
