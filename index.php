@@ -39,8 +39,6 @@ $q_masuk = mysqli_query($conn, "
 $q_keluar = mysqli_query($conn, "
   SELECT DAY(created_at) as hari, SUM(qty) as total
   FROM stock_logs
-  SELECT DAY(created_at) as hari, SUM(qty) as total
-  FROM stock_logs
   WHERE change_type='REDUCE'
   AND MONTH(created_at)=MONTH(CURRENT_DATE())
   AND YEAR(created_at)=YEAR(CURRENT_DATE())
@@ -250,8 +248,7 @@ function waktu_lalu($datetime)
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
