@@ -29,7 +29,7 @@ $data = query("
         p.min_stock,
         p.price,
         p.gambar,
-        p.created_at,
+        p.created_at
     FROM products p 
     JOIN categories c ON p.category_id = c.id
     WHERE p.stock <= p.min_stock 
@@ -150,7 +150,7 @@ foreach ($data as $row) {
     if (empty($row['gambar']) ||  !File_exists($gambar)) {
         $gambarHtml = '-';
     } else {
-        $gambarHtml = '<imh src="' . $gambar . '">';
+        $gambarHtml = '<img src="' . $gambar . '">';
     }
 
     $html .= '
@@ -178,6 +178,6 @@ $html .= '
 ';
 
 // Generate PDF
-$mpdf->WritenHTML($html);
+$mpdf->WriteHTML($html);
 $mpdf->Output('laporan_stok_minimum.pdf', 'I');
 ?>

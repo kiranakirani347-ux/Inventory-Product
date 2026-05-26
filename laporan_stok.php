@@ -1,6 +1,6 @@
 <?php
 // require composer autoload
-requir_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // koneksi database
 require_once('koneksi.php');
@@ -32,7 +32,7 @@ $data = query("
         p.created_at
     FROM products p
     JOIN categories c ON p.category_id = c.id
-    ORDER BY p.products_name ASC
+    ORDER BY p.product_name ASC
 ");
 
 // Inisialisasi mPDF
@@ -128,8 +128,8 @@ $html = '
             <th>Harga</th>
             <th>Stok</th>
             <th>Min. Stok</th>
-            <thStatus</th>
-            <th>TRanggal Dibuat</th>
+            <th>Status</th>
+            <th>Tanggal Dibuat</th>
         </tr>
     </thead>
 

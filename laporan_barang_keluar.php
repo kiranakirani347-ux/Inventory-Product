@@ -35,7 +35,7 @@ $data = query("
     JOIN products p ON sl.product_id = p.id
     JOIN categories c ON p.category_id = c.id
     JOIN users u ON sl.created_by = u.id
-    WHERE sl.change_type = 'ADD'
+    WHERE sl.change_type = 'REDUCE'
     ORDER BY sl.created_at DESC
 ");
 
@@ -158,6 +158,6 @@ $html .= '
 ';
 
 // Generate PDF
-$mpdf->WritenHTML($html);
+$mpdf->WriteHTML($html);
 $mpdf->Output('laporan_barang_keluar.pdf', 'I');
 ?>

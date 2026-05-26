@@ -158,6 +158,6 @@ $html .= '
 ';
 
 // Generate PDF
-$mpdf->WritenHTML($html);
+$mpdf->WriteHTML($html);
 $mpdf->Output('laporan_barang_masuk.pdf', 'I');
 ?>
