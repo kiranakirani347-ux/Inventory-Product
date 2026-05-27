@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     if ($change_type == "ADD") {
         $stock_after = $stock_before + $qty;
     } else {
-        $stock_after = $stock_before + $qty;
+        $stock_after = $stock_before - $qty;
 
         if ($stock_after < 0) {
             echo "<script>alert('Stok tidak cukup!');</script>";
@@ -126,9 +126,7 @@ if (isset($_POST['submit'])) {
           <span><?php echo isset($_SESSION['role']) ? $_SESSION['role'] : 'Role'; ?></span>
         </li>
       </ul>
-        <hr class="dropdown-divider" />
-      </li>
-
+       
       <li>
         <a class="dropdown-item d-flex align-items-center" href="logout.php">
           <i class="bi bi-box-arrow-right"></i>
@@ -197,10 +195,10 @@ if (isset($_POST['submit'])) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Manajemen Stok</h1>
+      <h1>Stock Barang</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="produk.php">Data Produk</a></li>
           <li class="breadcrumb-item active">Manajemen Stok</li>
         </ol>
@@ -209,6 +207,8 @@ if (isset($_POST['submit'])) {
 
     <section class="section">
       <div class="row">
+
+      <!-- FORM MANAJEMEN STOK -->
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
@@ -284,8 +284,8 @@ if (isset($_POST['submit'])) {
 
                             while ($row = mysqli_fetch_assoc($query)) {
                               $badge = $row['change_type'] == 'ADD'
-                                  ? "<span calss='badge bg-success'>+ (ADD)</span>"
-                                  : "<span calss='badge bg-danger'>- (REDUCE)</span>";
+                                  ? "<span class='badge bg-success'>+ (ADD)</span>"
+                                  : "<span class='badge bg-danger'>- (REDUCE)</span>";
 
                                   echo "<tr>
         <td>" . date('d M Y', strtotime($row['created_at'])) . "</td>

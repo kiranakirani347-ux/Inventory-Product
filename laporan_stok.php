@@ -1,8 +1,8 @@
 <?php
-// require composer autoload
+// Require composer autoload
 require_once __DIR__ . '/vendor/autoload.php';
 
-// koneksi database
+// Koneksi database
 require_once('koneksi.php');
 
 function query($query)
@@ -20,8 +20,8 @@ function query($query)
 
 // Ambil data produk + kategori
 $data = query("
-    SELECT
-        P.id,
+    SELECT 
+        p.id,
         p.product_code,
         p.product_name,
         c.category_name,
@@ -44,66 +44,66 @@ $html = '
 <html>
 <head>
     <title>Laporan Stok Barang</title>
-    
+
     <style>
         body {
             font-family: sans-serif;
         }
-            
+
         h1 {
             text-align: center;
             color: #262626;
             margin-bottom: 5px;
         }
-            
+
         h3 {
             text-align: center;
             margin-top: 0;
             margin-bottom: 20px;
         }
-            
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
-            
+
         thead th {
             background-color: #4e73df;
             color: white;
             padding: 10px;
             font-size: 12px;
         }
-            
+
         tbody td {
             padding: 8px;
             font-size: 11px;
             border: 1px solid #ccc;
         }
-            
+
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-            
+
         .text-center {
             text-align: center;
         }
-            
+
         .text-right {
             text-align: right;
         }
-            
+
         img {
             width: 70px;
             height: 70px;
             object-fit: cover;
         }
-            
+
         .stok-aman {
             color: green;
             font-weight: bold;
         }
-            
+
         .stok-minim {
             color: red;
             font-weight: bold;
@@ -143,7 +143,7 @@ foreach ($data as $row) {
     $harga = "Rp " . number_format($row['price'], 0, ',', '.');
 
     // Status stok
-    if ($row['stok'] <= $row['min_stock']) {
+    if ($row['stock'] <= $row['min_stock']) {
         $status = '<span class="stok-minim">Stok Minim</span>';
     } else {
         $status = '<span class="stok-aman">Aman</span>';
@@ -154,18 +154,18 @@ foreach ($data as $row) {
 
     // Jika gambar kosong
     if (empty($row['gambar']) || !file_exists($gambar)) {
-        $gambarHtml = '-' ;
+        $gambarHtml = '-';
     } else {
-        $gambarHtml = '<img src="' . $gambar . '">' ;
+        $gambarHtml = '<img src="' . $gambar . '">';
     }
-    
+
     $html .= '
         <tr>
             <td class="text-center">' . $no++ . '</td>
             <td class="text-center">' . $gambarHtml . '</td>
-            <td> ' . $row['product_code'] . '</td>
-            <td> ' . $row['product_name'] . '</td>
-            <td> ' . $row['category_name'] . '</td>
+            <td>' . $row['product_code'] . '</td>
+            <td>' . $row['product_name'] . '</td>
+            <td>' . $row['category_name'] . '</td>
             <td class="text-right">' . $harga . '</td>
             <td class="text-center">' . $row['stock'] . '</td>
             <td class="text-center">' . $row['min_stock'] . '</td>

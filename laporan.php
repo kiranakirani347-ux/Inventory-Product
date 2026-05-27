@@ -173,7 +173,7 @@ $total_stok_kritis = mysqli_num_rows(mysqli_query(
       <h1>Laporan</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
           <li class="breadcrumb-item">Laporan</li>
           
         </ol>
