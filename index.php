@@ -149,7 +149,7 @@ function waktu_lalu($datetime)
 
 <div class="d-flex align-items-center justify-content-between">
   <a href="index.php" class="logo d-flex align-items-center">
-    <img src="assets/img/logo.png" alt="">
+    <img src="assets/img/logoweb.jpeg" alt="">
     <span class="d-none d-lg-block">Inventory Product</span>
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -181,7 +181,7 @@ function waktu_lalu($datetime)
       <li>
         <a class="dropdown-item d-flex align-items-center" href="logout.php">
           <i class="bi bi-box-arrow-right"></i>
-          <span>Sign Out</span>
+          
         </a>
       </li>
       <!-- End Profile Dropdown Items -->
@@ -420,7 +420,7 @@ function waktu_lalu($datetime)
               <th>Kategori</th>
               <th>Stok</th>
             </tr>
-          <thead>
+          </thead>
           <tbody>
             <?php
             $no = 1;
@@ -487,7 +487,7 @@ function waktu_lalu($datetime)
         
         <div class="activity">
 
-        <?php while ($row - mysqli_fetch_assoc($q_aktivitas)) :
+        <?php while ($row = mysqli_fetch_assoc($q_aktivitas)) :
 
           if ($row['change_type'] == 'ADD') {
             $text = "Penambahan stok";

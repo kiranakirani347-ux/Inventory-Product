@@ -79,7 +79,7 @@ if (isset($_POST['simpan'])) {
 
 <div class="d-flex align-items-center justify-content-between">
   <a href="index.php" class="logo d-flex align-items-center">
-    <img src="assets/img/logo.png" alt="">
+    <img src="assets/img/logoweb.jpeg" alt="">
     <span class="d-none d-lg-block">Inventory Product</span>
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -111,7 +111,7 @@ if (isset($_POST['simpan'])) {
       <li>
         <a class="dropdown-item d-flex align-items-center" href="logout.php">
           <i class="bi bi-box-arrow-right"></i>
-          <span>Sign Out</span>
+         
         </a>
       </li>
       <!-- End Profile Dropdown Items -->
