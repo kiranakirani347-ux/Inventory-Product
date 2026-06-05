@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
     $q = mysqli_query($conn, "SELECT stock FROM products WHERE id='$product_id'");
     $data = mysqli_fetch_assoc($q);
 
-    $stock_before = $data['stok'];
+    $stock_before = $data['stock'];
     
     // hitung stok baru
     if ($change_type == "ADD") {
