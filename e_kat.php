@@ -172,7 +172,7 @@ if (isset($_POST['update'])) {
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="kategori_produk.php"></a>Kategori Produk</a></li>
-          <li class="breadcrumb-item active">edit</li>
+          <li class="breadcrumb-item active">Edit</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
