@@ -197,7 +197,7 @@ if (isset($_POST['submit'])) {
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock Barang</h1>
+      <h1>Manajemen Stok</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
